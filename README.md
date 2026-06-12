@@ -1,42 +1,85 @@
-#  Crypto Price Tracker Bot
+# Crypto Price Tracker Telegram Bot
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Aiogram](https://img.shields.io/badge/Aiogram-3.x-blue)
-![Status](https://img.shields.io/badge/Status-Active-success)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)](https://www.python.org/)
+[![Aiogram](https://img.shields.io/badge/Aiogram-3.x-2CA5E0)](https://docs.aiogram.dev/)
+[![Tests](https://github.com/RoninXDark/CryptoPriceTracker-Bot/actions/workflows/tests.yml/badge.svg)](https://github.com/RoninXDark/CryptoPriceTracker-Bot/actions/workflows/tests.yml)
 
-A professional Telegram bot that tracks real-time cryptocurrency prices and market trends using the CoinGecko API. Built with **Python** and asynchronous **Aiogram** framework.
+An asynchronous Telegram bot for checking live cryptocurrency prices and
+24-hour market movement through the CoinGecko API.
 
-##  Features
+## Why This Project
 
-* **Real-time Data:** Instant price updates for Bitcoin, Ethereum, Solana, and thousands of other coins.
-* **Market Trends:** Shows 24-hour percentage changes with visual indicators (📈/📉).
-* **Interactive Menu:** User-friendly Inline Keyboard interface.
-* **Error Handling:** Robust system that handles API rate limits and invalid inputs gracefully.
+The project demonstrates a practical API automation workflow: Telegram handles
+the user interface, CoinGecko supplies market data, and the application layer
+validates user input, handles rate limits, and formats the result for chat.
 
-##  Tech Stack
+## Features
 
-* **Language:** Python 3
-* **Framework:** Aiogram (AsyncIO)
-* **API:** CoinGecko (REST API)
-* **Libraries:** Requests, JSON
+- Live USD prices and 24-hour percentage changes
+- Inline buttons for Bitcoin, Ethereum, Solana, and Tether
+- Manual lookup using full names or common tickers
+- Asynchronous HTTP requests with explicit timeouts
+- Friendly handling for unknown assets, rate limits, and network failures
+- Environment-based secret management
+- Unit tests and GitHub Actions CI
 
-##  Demo
+## Architecture
 
-*(Here you will see the bot in action - optional placeholder)*
+```text
+main.py
+crypto_tracker/
+|-- bot.py          Telegram handlers and application lifecycle
+|-- coingecko.py    Market-data client and input normalization
+|-- config.py       Environment configuration
+`-- keyboards.py    Inline keyboard builders
+tests/
+`-- test_coingecko.py
+```
 
-##  How to Run
+## Local Setup
 
-1.  **Clone the repository**
-    ```bash
-    git clone [https://github.com/YOUR_USERNAME/CryptoBot.git](https://github.com/YOUR_USERNAME/CryptoBot.git)
-    ```
-2.  **Install dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  **Configuration**
-    Open `main.py` and insert your Telegram Bot Token.
-4.  **Run**
-    ```bash
-    python main.py
-    ```
+```bash
+git clone https://github.com/RoninXDark/CryptoPriceTracker-Bot.git
+cd CryptoPriceTracker-Bot
+python -m venv .venv
+```
+
+Activate the environment and install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Create a local environment file:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Add the token created with Telegram's `@BotFather`:
+
+```dotenv
+TELEGRAM_BOT_TOKEN=your_token_here
+```
+
+Run the bot:
+
+```bash
+python main.py
+```
+
+## Tests
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest
+```
+
+## Security
+
+The Telegram token is loaded from `TELEGRAM_BOT_TOKEN`. The `.env` file is
+ignored by Git and must never be committed.
+
+## Tech Stack
+
+Python, Aiogram, aiohttp, CoinGecko REST API, python-dotenv, pytest, GitHub Actions
